@@ -12,4 +12,4 @@ work/
 *.wlf
 transcript
 *.jdi
-*.pof
+*.pofc5_pin_model_dump.txt
