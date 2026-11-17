@@ -1,7 +1,4 @@
-// AI-ASSISTED (Claude): PS/2 mouse 3-byte packet parser.
-// Byte 0: [0] left, [1] right, [2] middle, [3] always 1, [4] X sign, [5] Y sign.
-// Byte 1: X movement, Byte 2: Y movement. Signs are two's complement, 9-bit result.
-// A byte-0 without bit 3 set is discarded so the parser can resync.
+
 `timescale 1ns/1ps
 module mouse_packet_parser (
     input            clk,
