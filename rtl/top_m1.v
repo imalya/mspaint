@@ -1,8 +1,4 @@
-// AI-ASSISTED (Claude): Milestone 1 board demo top level (switch/KEY fallback).
-// KEY[0] reset (active low). KEY[1] move cursor right, KEY[2] move cursor down.
-// KEY[3] hold to draw (button). SW[2:0] pen colour.
-// Cursor wraps at the canvas edges. Mouse input from Imalya replaces the KEY controls later.
-// NOT yet tested on the board: check port names against your course vga_adapter.v.
+
 `timescale 1ns/1ps
 module top_m1 (
     input         CLOCK_50,
