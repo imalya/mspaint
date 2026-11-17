@@ -1,4 +1,4 @@
-// AI-ASSISTED (Claude): canvas RAM test. Writes and reads back a few addresses.
+
 `timescale 1ns/1ps
 module tb_canvas_ram;
     reg clk = 0, we = 0;
