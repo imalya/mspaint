@@ -1,4 +1,4 @@
-// AI-ASSISTED (Claude): testbench for mouse_tracker (position tracking + edge clamping).
+
 `timescale 1ns/1ps
 module tb_tracker;
     reg clk = 0, resetn = 0, pkt_valid = 0;
