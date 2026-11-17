@@ -1,4 +1,4 @@
-// AI-ASSISTED (Claude): testbench for mouse_packet_parser.
+
 `timescale 1ns/1ps
 module tb_packet_parser;
     reg clk = 0, resetn = 0, rx_valid = 0;
