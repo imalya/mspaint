@@ -1,5 +1,5 @@
 
-`timescale 1ns/1p
+`timescale 1ns/1ps
 module tb_packet_parser;
     reg clk = 0, resetn = 0, rx_valid = 0;
     reg  [7:0] rx_data = 0;
