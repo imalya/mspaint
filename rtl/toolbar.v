@@ -1,7 +1,4 @@
-// AI-ASSISTED (Claude): toolbar hit-testing.
-// The bottom 8 rows of the canvas are a palette: 8 swatches, 20 pixels wide each.
-// Clicking a swatch (left button, cursor in those rows) selects that colour.
-// Colour 0 (black) is the first swatch.
+
 `timescale 1ns/1ps
 module toolbar (
     input            clk,
