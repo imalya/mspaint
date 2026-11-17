@@ -1,9 +1,4 @@
-// AI-ASSISTED (Claude): board demo with the PS/2 mouse.
-// Mouse moves the cursor, left button draws. Click a swatch in the bottom
-// 8 rows to pick the pen colour (starts white). The cursor is shown as the
-// inverted colour of the pixel under it.
-// KEY[0] reset (active low). LEDR[0] = mouse initialised, LEDR[1] = left button.
-// Uses the course PS2_Controller and vga_adapter (starter code, cite them).
+
 `timescale 1ns/1ps
 module top_m2 (
     input         CLOCK_50,
