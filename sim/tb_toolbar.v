@@ -1,4 +1,4 @@
-// AI-ASSISTED (Claude): testbench for toolbar hit-testing.
+
 `timescale 1ns/1ps
 module tb_toolbar;
     reg clk = 0, resetn = 0, button = 0;
