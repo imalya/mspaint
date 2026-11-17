@@ -1,5 +1,4 @@
-// AI-ASSISTED (Claude): display test. Fills the canvas with a known pattern
-// and checks that the VGA outputs visit every pixel once, in raster order, with the right colour.
+
 `timescale 1ns/1ps
 module tb_display;
     reg clk = 0, resetn = 0;
