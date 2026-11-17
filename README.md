@@ -1,9 +1,5 @@
 # Milestone 1: canvas, pen, VGA display (Emily) + mouse input and toolbar (Imalya)
 
-AI-ASSISTED: the Verilog and testbenches in this folder were written with
-Claude (Anthropic). The TA confirmed AI use is allowed for this project.
-Check that the course policy and any required citations are met before submitting.
-
 ## Files
 - rtl/canvas_ram.v: 160x120 framebuffer, 3-bit colour, one write port, one read port
 - rtl/pen_engine.v: writes the colour at the cursor while the button is held (one pixel per clock)
