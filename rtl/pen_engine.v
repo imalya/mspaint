@@ -1,6 +1,4 @@
-// AI-ASSISTED (Claude): pen engine. While the button is held, writes the
-// selected colour into the canvas at the cursor position (one pixel per clock).
-// Cursor is clamped to the canvas: x in 0..159, y in 0..119.
+
 `timescale 1ns/1ps
 module pen_engine (
     input         clk,
