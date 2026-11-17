@@ -1,5 +1,4 @@
-// AI-ASSISTED (Claude): canvas framebuffer, 160x120, 3-bit colour.
-// One write port (pen engine), one read port (display FSM), 1-cycle read latency.
+
 `timescale 1ns/1ps
 module canvas_ram (
     input            clk,
