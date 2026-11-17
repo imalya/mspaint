@@ -1,6 +1,4 @@
-// AI-ASSISTED (Claude): scans the 160x120 canvas in raster order and sends
-// each pixel to the VGA adapter as (x, y, colour, plot). Colour is 3-bit,
-// expanded to 9-bit RGB for the adapter.
+
 `timescale 1ns/1ps
 module display_fsm (
     input         clk,
