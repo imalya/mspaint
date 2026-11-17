@@ -1,6 +1,4 @@
-// AI-ASSISTED (Claude): cursor position tracker with edge clamping.
-// Each packet moves the cursor by (dx, dy). Mouse Y grows upward, screen Y grows
-// downward, so dy is subtracted. The cursor stops at the canvas edges (no wrapping).
+
 `timescale 1ns/1ps
 module mouse_tracker (
     input             clk,
