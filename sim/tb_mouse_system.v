@@ -1,5 +1,4 @@
-// AI-ASSISTED (Claude): system test of the mouse chain as wired in top_m2:
-// bytes -> mouse_init -> packet parser -> tracker (movement / 2) -> toolbar.
+
 `timescale 1ns/1ps
 module tb_mouse_system;
     reg clk = 0, resetn = 0, rx_valid = 0;
