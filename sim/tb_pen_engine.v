@@ -1,5 +1,4 @@
-// AI-ASSISTED (Claude): pen test. Holds the button and moves the cursor from
-// (10,10) to (20,10). Expects 11 writes in colour 6 at row 10, and no writes when the button is up.
+
 `timescale 1ns/1ps
 module tb_pen_engine;
     reg clk = 0, resetn = 0, button = 0;
