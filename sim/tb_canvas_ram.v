@@ -4,7 +4,7 @@ module tb_canvas_ram;
     reg clk = 0, we = 0;
     reg [14:0] waddr = 0, raddr = 0;
     reg [2:0]  wdata = 0;
-    wire [2:0] q;
+    wire [2:0] 
     integer errors = 0;
     canvas_ram dut (.clk(clk), .we(we), .waddr(waddr), .wdata(wdata), .raddr(raddr), .q(q));
     always #10 clk = ~clk;
