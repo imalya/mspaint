@@ -4,7 +4,7 @@ module tb_mouse_init;
     reg clk = 0, resetn = 0, rx_valid = 0;
     reg [7:0] rx_data = 0;
     wire init_done;
-    integer errors = 
+    integer errors = 0;
 
     always #10 clk = ~clk;
     mouse_init dut (.clk(clk), .resetn(resetn), .rx_valid(rx_valid), .rx_data(rx_data),
