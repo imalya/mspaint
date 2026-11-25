@@ -1,7 +1,4 @@
-// AI-ASSISTED (Claude): eraser engine.
-// While active, clears a 3x3 square around the cursor to black (colour 0).
-// It cycles through the 9 offsets, one pixel per clock, so the whole square is
-// rewritten every 9 clocks. Pixels outside the drawing area are skipped.
+
 `timescale 1ns/1ps
 module eraser_engine #(parameter YMAX = 111) (   // last drawable row
     input             clk,
