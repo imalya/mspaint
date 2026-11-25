@@ -1,10 +1,4 @@
-// AI-ASSISTED (Claude): Milestone 2 board demo: mouse + all drawing tools.
-// SW[2:0] tool: 0 pen, 1 eraser, 2 line, 3 rectangle, 4 fill
-//   (temporary: the on-screen tool-select FSM replaces the switches)
-// Colour: click a swatch in the bottom 8 rows (starts white).
-// KEY[0] reset (active low). KEY[1] clear the canvas.
-// LEDR[0] mouse ready, [1] left button, [2] engine busy, [5:3] pen colour, [9:7] tool.
-// Uses the course PS2_Controller and vga_adapter (starter code, cite them).
+
 `timescale 1ns/1ps
 module top_draw (
     input         CLOCK_50,
