@@ -1,11 +1,4 @@
-// AI-ASSISTED (Claude): connects the mouse to the drawing engines.
-// tool: 0 pen, 1 eraser, 2 line, 3 rectangle, 4 fill
-//   pen / eraser: draw while the left button is held
-//   line / rectangle: press = first point, release = second point, then draw
-//   fill: click inside a region
-//   clear (separate input): wipe the canvas
-// Only one engine writes at a time; a press is ignored while an engine is busy.
-// Clicks on the palette rows (y > YMAX) never start a drawing.
+
 `timescale 1ns/1ps
 module draw_controller #(parameter YMAX = 111) (
     input             clk,
