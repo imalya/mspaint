@@ -1,7 +1,4 @@
-// AI-ASSISTED (Claude): rectangle outline engine.
-// On start, sorts the two corners, then draws the top edge, bottom edge,
-// left edge and right edge, one pixel per clock. Works for corners given
-// in any order. busy is high while drawing; done pulses at the end.
+
 `timescale 1ns/1ps
 module rect_engine (
     input             clk,
