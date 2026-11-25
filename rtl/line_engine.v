@@ -1,10 +1,4 @@
-// AI-ASSISTED (Claude): Bresenham line engine, all directions.
-// On start, latches the two end points and draws one pixel per clock from
-// (x0, y0) to (x1, y1). busy is high while drawing; done pulses at the end.
-//   dx = |x1 - x0|, dy = -|y1 - y0|, err = dx + dy
-//   each step: e2 = 2*err
-//              if (e2 >= dy) { err += dy; x += sx; }
-//              if (e2 <= dx) { err += dx; y += sy; }
+
 `timescale 1ns/1ps
 module line_engine (
     input             clk,
