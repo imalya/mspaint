@@ -1,54 +1,43 @@
-// eraser_engine.v -- stamps a SIZE x SIZE black square around (cx, cy).
-// Pulse start for 1 cycle (when !busy); center is latched and clamped so the
-// square stays inside the 160x120 canvas. 1 pixel per clock.
-module eraser_engine #(parameter SIZE = 4) (
-    input            clk,
-    input            resetn,
-    input            start,
-    input      [7:0] cx,
-    input      [6:0] cy,
-    output     [7:0] x_out,
-    output     [6:0] y_out,
-    output     [2:0] color_out,
-    output           plot,
-    output           busy
+// AI-ASSISTED (Claude): eraser engine.
+// While active, clears a 3x3 square around the cursor to black (colour 0).
+// It cycles through the 9 offsets, one pixel per clock, so the whole square is
+// rewritten every 9 clocks. Pixels outside the drawing area are skipped.
+`timescale 1ns/1ps
+module eraser_engine #(parameter YMAX = 111) (   // last drawable row
+    input             clk,
+    input             resetn,
+    input             active,           // button held with the eraser tool
+    input      [7:0]  cursor_x,
+    input      [7:0]  cursor_y,
+    output reg        we,
+    output reg [14:0] waddr,
+    output reg [2:0]  wdata
 );
-    localparam HALF = SIZE / 2;
-    localparam [7:0] X_MAX = 160 - SIZE;
-    localparam [6:0] Y_MAX = 120 - SIZE;
-
-    // top-left corner of the stamp, clamped to the canvas
-    wire [7:0] ox = (cx < HALF) ? 8'd0 :
-                    ((cx - HALF) > X_MAX) ? X_MAX : (cx - HALF);
-    wire [6:0] oy = (cy < HALF) ? 7'd0 :
-                    ((cy - HALF) > Y_MAX) ? Y_MAX : (cy - HALF);
-
-    reg        active;
-    reg [7:0]  ox_r;
-    reg [6:0]  oy_r;
-    reg [3:0]  i, j;
+    reg [1:0] ox, oy;                  // 0,1,2 -> offset -1,0,+1
+    reg signed [9:0] px, py;           // pixel being erased (can be -1)
 
     always @(posedge clk) begin
         if (!resetn) begin
-            active <= 1'b0; ox_r <= 0; oy_r <= 0; i <= 0; j <= 0;
-        end else if (!active) begin
-            if (start) begin
-                ox_r <= ox; oy_r <= oy; i <= 0; j <= 0; active <= 1'b1;
-            end
+            we <= 0; waddr <= 0; wdata <= 0; ox <= 0; oy <= 0;
         end else begin
-            if (i == SIZE - 1) begin
-                i <= 0;
-                if (j == SIZE - 1) active <= 1'b0;
-                else               j <= j + 4'd1;
+            we    <= 0;
+            wdata <= 3'b000;
+            if (active) begin
+                px = $signed({2'b00, cursor_x}) + $signed({1'b0, ox}) - 10'sd1;
+                py = $signed({2'b00, cursor_y}) + $signed({1'b0, oy}) - 10'sd1;
+                if (px >= 0 && px <= 159 && py >= 0 && py <= YMAX) begin
+                    we    <= 1;
+                    waddr <= py[6:0] * 160 + px[7:0];
+                end
+                // next offset: ox 0..2, then oy 0..2
+                if (ox == 2) begin
+                    ox <= 0;
+                    oy <= (oy == 2) ? 2'd0 : oy + 2'd1;
+                end else
+                    ox <= ox + 2'd1;
             end else begin
-                i <= i + 4'd1;
+                ox <= 0; oy <= 0;
             end
         end
     end
-
-    assign x_out     = ox_r + i;
-    assign y_out     = oy_r + j;
-    assign color_out = 3'b000;      // black = background
-    assign plot      = active;
-    assign busy      = active;
 endmodule
