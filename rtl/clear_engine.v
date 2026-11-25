@@ -1,6 +1,4 @@
-// AI-ASSISTED (Claude): clear-screen engine. On start, writes black to all
-// 19,200 canvas pixels, one per clock (0.38 ms at 50 MHz).
-// Replaces the for loop that Quartus rejected in Milestone 1.
+
 `timescale 1ns/1ps
 module clear_engine (
     input             clk,
