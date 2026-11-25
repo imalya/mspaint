@@ -1,19 +1,4 @@
-// AI-ASSISTED (Claude): flood fill engine (4-way, stack in on-chip memory).
-// Fills the region of same-coloured pixels connected to the seed with the new
-// colour. Hardware cannot recurse, so pixels to visit are kept on a stack.
-// A pixel is recoloured at the moment it is pushed, so it is never pushed twice
-// and the stack never needs more than one entry per pixel.
-//
-//   seed colour = target; if target == new colour: nothing to do
-//   recolour seed, push seed
-//   while stack not empty:
-//       pop p
-//       for each neighbour n of p (left, right, up, down) inside the area:
-//           read n; if colour == target: recolour n, push n
-//
-// The canvas read takes 2 clocks (registered address, then RAM output), so each
-// neighbour check is 3 states: NEXT (send address), N_WAIT, N_CHECK.
-// Only rows 0..H-1 are filled (rows below are the palette).
+
 `timescale 1ns/1ps
 module fill_engine #(parameter H = 112) (
     input             clk,
