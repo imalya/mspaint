@@ -1,4 +1,3 @@
-
 `timescale 1ns/1ps
 module fill_engine #(parameter H = 112) (
     input             clk,
@@ -16,11 +15,19 @@ module fill_engine #(parameter H = 112) (
     output reg        done
 );
     localparam DEPTH = 160 * H;
-    localparam S_IDLE = 3'd0, S_SEED_W = 3'd1, S_SEED_C = 3'd2, S_POP = 3'd3,
-               S_NEXT = 3'd4, S_N_W = 3'd5, S_N_C = 3'd6;
-    reg [2:0]  state;
+    localparam S_IDLE = 4'd0, S_SEED_W = 4'd1, S_SEED_C = 4'd2, S_POP = 4'd3,
+               S_NEXT = 4'd4, S_N_W = 4'd5, S_N_C = 4'd6,
+               S_POP_W = 4'd7, S_POP_C = 4'd8;
+    reg [3:0]  state;
 
-    reg [14:0] stack [0:DEPTH-1];       // entries are {y[6:0], x[7:0]}
+    // ---- stack: its own block so Quartus infers a RAM (registered read) ----
+    (* ramstyle = "M10K" *) reg [14:0] stack [0:DEPTH-1];   // entries are {y[6:0], x[7:0]}
+    reg        stack_we;
+    reg [14:0] stack_waddr, stack_raddr, stack_wdata, stack_rdata;
+    always @(posedge clk) begin
+        if (stack_we) stack[stack_waddr] <= stack_wdata;
+        stack_rdata <= stack[stack_raddr];      // data valid 1 clock after raddr is set
+    end
     reg [14:0] sp;                      // number of entries on the stack
     reg [14:0] popped;                  // pixel whose neighbours we are checking
     reg [7:0]  nx, ny;                  // neighbour being checked
@@ -35,8 +42,9 @@ module fill_engine #(parameter H = 112) (
     assign busy = (state != S_IDLE);
 
     always @(posedge clk) begin
-        we   <= 0;
-        done <= 0;
+        we       <= 0;
+        done     <= 0;
+        stack_we <= 0;
         if (!resetn) begin
             state <= S_IDLE;
             sp    <= 0;
@@ -59,8 +67,8 @@ module fill_engine #(parameter H = 112) (
                     state <= S_IDLE;
                 end else begin
                     we <= 1; waddr <= ny * 160 + nx; wdata <= newc;
-                    stack[sp] <= {ny[6:0], nx};         // sp is 0 here; one write
-                    sp    <= sp + 15'd1;                // address keeps it a RAM block
+                    stack_we <= 1; stack_waddr <= sp; stack_wdata <= {ny[6:0], nx};
+                    sp    <= sp + 15'd1;
                     state <= S_POP;
                 end
             end
@@ -69,11 +77,16 @@ module fill_engine #(parameter H = 112) (
                     done  <= 1;
                     state <= S_IDLE;
                 end else begin
-                    popped <= stack[sp - 1];
-                    sp     <= sp - 1;
-                    dir    <= 0;
-                    state  <= S_NEXT;
+                    stack_raddr <= sp - 15'd1;
+                    sp     <= sp - 15'd1;
+                    state  <= S_POP_W;
                 end
+            end
+            S_POP_W: state <= S_POP_C;                 // RAM reads the address
+            S_POP_C: begin                             // stack_rdata is valid now
+                popped <= stack_rdata;
+                dir    <= 0;
+                state  <= S_NEXT;
             end
             S_NEXT: begin
                 if (dir == 3'd4) begin
@@ -99,8 +112,8 @@ module fill_engine #(parameter H = 112) (
             S_N_C: begin
                 if (q2 == target) begin
                     we <= 1; waddr <= ny * 160 + nx; wdata <= newc;
-                    stack[sp] <= {ny[6:0], nx};
-                    sp <= sp + 1;
+                    stack_we <= 1; stack_waddr <= sp; stack_wdata <= {ny[6:0], nx};
+                    sp <= sp + 15'd1;
                 end
                 dir   <= dir + 3'd1;
                 state <= S_NEXT;
